@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>A clock</title>
+</head>
+<style>
+	.clock {
+		border: solid 10px black;
+		width: 500px;
+		height: 500px;
+		border-radius: 300px;
+		margin: 20px auto;
+		position: relative;
+	}
+	#second {
+		background-color: grey;
+		border: solid 0.5px grey;
+		width: 2px;
+		height: 230px;
+		position: absolute;
+		margin-top: 20px;
+		margin-left: 250px;
+		z-index: -1000;
+		transform-origin: center bottom;
+		animation: rotate 60s infinite;
+		animation-timing-function: linear;
+
+	}
+	#minute {
+		background-color: darkgrey;
+		border: solid 0.7px darkgrey;
+		width: 2px;
+		height: 180px;
+		position: absolute;
+		top: 70px;
+		left: 250px;
+		z-index: 0;
+		transform-origin: center bottom;
+		animation: rotate 3600s infinite;
+		animation-timing-function: linear;	
+	}
+	#hour {
+		background-color: black;
+		border: solid 2px black;
+		width: 2px;
+		height: 150px;
+		position: absolute;
+		margin-top: 100px;
+		margin-left: 250px;	
+		z-index: 1000;
+		transform-origin: center bottom;
+		animation: rotate 43200s infinite;
+		animation-timing-function: linear;
+	}
+
+	@keyframes rotate {
+		0% { transform: rotate(0deg);}
+    	100% {transform: rotate(360deg);}
+
+	}
+	
+
+</style>
+<body>
+<h1><span>Tick </span><span>Tock</span></h1>
+<div class = "clock">
+	<div id = "second"></div>
+	<div id = "minute"></div>
+	<div id = "hour"></div>
+</div>
+</body>
+</html>

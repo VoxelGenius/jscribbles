@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To Do list</title>
+	<link href="https://fonts.googleapis.com/css?family=Dosis|Inconsolata|Lato|Montserrat|Nunito|Roboto+Mono|Source+Sans+Pro" rel="stylesheet">
+</head>
+<style type="text/css">
+	* {
+		font-family: 'Roboto Mono', monospace;
+		/**border: solid 1px black;**/
+	}
+	h1 {
+		letter-spacing: 3px;
+		font-size: 20px;
+		width: 150px;
+		margin: 40px 15px;
+		text-align: center;
+	}
+	.form-container {
+		border: solid 1px black;
+		border-radius: 0px;
+		padding: 20px;
+		width: 700px;
+		margin: 10px auto;
+		font-family: 'Roboto Mono', monospace;
+	}
+	.font {
+		font-family: 'Lato', sans-serif;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-family: 'Montserrat', sans-serif;
+		font-family: 'Inconsolata', monospace;
+		font-family: 'Dosis', sans-serif;
+		font-family: 'Nunito', sans-serif;
+		font-family: 'Roboto Mono', monospace;
+	}
+	input[type = submit] {
+		border: solid 1px black;
+		color: white;
+		background-color: black;
+		box-sizing: border-box;
+		padding: 14px 20px;
+		width: 100%;
+		margin: 20px auto;
+	}
+	input[type = text] {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 10px 2px;
+
+	}
+	#title {
+		border-bottom: solid 1px black;
+		margin-bottom: 10px;
+	}
+	.list-container {
+		width: 700px;
+		margin: 20px auto;
+		padding: 5px;
+	}
+	.li {
+
+	}
+</style>
+<body>
+<div class="main">
+	<h1>TO-DO</h1>
+	<div class="form-container">
+		<form action = "#" id = "mainform">
+			<input type="text" id ="task" placeholder="I want to..." name = "act" autofocus>
+			<input id = "sub" type = "submit" value = "Enter">
+		</form>
+	</div>
+	<div class="list-container">
+		<h2 id= "title">Tasks for today</h2>
+		<p class = "nonew">No new tasks.</p>
+		<div class = "list">
+			<ol  id = "todo">
+				
+			</ol>
+		</div>
+	</div>
+</div>
+<script>
+
+	document.addEventListener("DOMContentLoaded", function(){
+		var form = document.querySelector('#mainform');
+		var ol = document.querySelector("#todo");
+		var p = document.querySelector("p");
+		var savedlist = JSON.parse(localStorage.getItem("listitems")) || []
+
+		for (var i = 0; i < savedlist.length; i++) {
+			var li = document.createElement("li");
+			/**
+			var close = document.createElement('button');
+			close.innerHTML = 'X';
+			close.style.backgroundColor = 'white';
+			close.style.float = "right";
+			close.style.border = "solid 1px white";
+			**/
+			li.innerText = savedlist[i].task;
+			li.done = savedlist[i].done;
+			if(li.done == true) {
+				li.style.color = "green";
+			}
+			ol.appendChild(li);
+
+		}
+
+
+		form.addEventListener("submit", function (event) {
+			event.preventDefault();
+			p.innerText = "";
+			var newtask = document.createElement('li');
+			/**
+			var close = document.createElement('button');
+			close.innerHTML = 'X';
+			close.style.backgroundColor = 'white';
+			close.style.float = "right";
+			close.style.border = "solid 1px white";
+			**/
+			newtask.innerText= document.querySelector("#task").value;
+			newtask.done = false;
+			form.reset();
+			ol.appendChild(newtask);
+			//newtask.appendChild(close);
+
+			savedlist.push({task:newtask.innerText, done: false});
+			localStorage.setItem("listitems", JSON.stringify(savedlist));
+			
+		})
+
+		
+		ol.addEventListener("click", function (e) {
+			if(/**e.target.tagName.toLowerCase() === "li" && **/e.target.done == false) {
+				e.target.style.color = "green";
+				e.target.done = true;
+			}
+			else {
+
+				e.target.done = false;
+			}
+			/**else if(e.target.tagName.toLowerCase() === "button") {
+				e.target.parentNode.remove();
+				/**	
+				if (document.querySelectorAll("ol li").length == 0) {
+					var p = document.querySelector("p");
+					p.innerText = "No new tasks";
+				}
+				**/
+				/**
+				if(ol.children.length == 0) {
+
+					var p = document.querySelector("p");
+					p.innerText = "No new tasks";
+				}
+			}**/
+		})
+	})
+
+
+</script>
+</body>
+</html>
+

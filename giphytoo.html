@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Giphy</title>
+	<link href="https://fonts.googleapis.com/css?family=Inconsolata" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<style type="text/css">
+	* {
+		font-family: 'Inconsolata', monospace;
+	}
+	h1 {
+		text-align: center;
+
+	}
+	img{
+		display: inline-block;
+		margin: 10px;
+		height: 200px;
+		width: 200px;
+		box-sizing: border-box;
+
+
+	}
+	.container {
+		
+		width: 600px;
+		margin: 0px auto;
+		text-align: center;
+		
+
+	}
+	#searchbutton, #removebutton {
+		box-sizing: border-box;
+		padding: 5px;
+		margin-left: 10px;
+		color: white;
+		border: solid 1px black;
+		background-color: black;
+		cursor: pointer;
+	}
+	#inputbutt {
+		border: solid 1px black;
+		box-sizing: border-box;
+		padding: 5px;
+
+	}
+
+	.imagebox {
+		border-top: solid 1px black;
+		margin-top: 40px;
+
+	}
+
+</style>
+<body>
+
+	<h1>Giphy.</h1>
+	<div class="container">
+	<input type = "text" id = "inputbutt" placeholder = "Search" id = "searchbox" autofocus>
+	<button id = "searchbutton">search</button>
+	
+	<button id = "removebutton">Remove Images</button>
+	</div>
+
+	<div class = "imagebox">
+		
+		
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script>
+	
+		$(document).ready(function(){
+			var site;
+			var search;
+			var add;
+			$('#searchbutton').on("click",function() {
+				site =  "https://api.giphy.com/v1/gifs/search?q=";
+				search = $('#inputbutt').val();
+				add = "&api_key=dc6zaTOxFJmzC";
+				url = site + search + add;
+				
+				$.ajax({
+					url: url,
+					dataType: "json",
+					
+				}).then(function (response) {
+					for (var i = 0; i < response.data.length; i++) {
+					var src = response.data[i].images.downsized.url;
+					createimg(src);
+					}
+					
+
+					// body...
+				})
+
+				function createimg(url) {
+					var img = $("<img/>");
+					img.attr('src', url);
+					img.addClass('.gif');
+					$('.imagebox').append(img);
+					// body...
+				}
+				
+
+
+				/**var newli =	$('<li>');
+				newli.text($('#inputbutt').val());
+				newli.css("color", "blue");
+				$(' ul').append(newli);
+				**/
+				
+			})
+			$('#removebutton').on("click",function () {
+				$('.imagebox img').remove();
+				// body...
+			})
+		})
+	</script>
+</body>
+</html>
